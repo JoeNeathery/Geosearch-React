@@ -5,24 +5,51 @@ import "./SearchBar.css";
 
 export const SearchBar = ({ setResults }) => {
     const [input, setInput] = useState("");
+    const [location, setLocation] = useState({longitude: -81.3792, latitude: 28.5383});
+
     const fetchData = (value) => {
-        fetch("https://jsonplaceholder.typicode.com/users")
-          .then((response) => response.json())
-          .then((json) => {
-            const results = json.filter((user) => {
-              return (
-                value &&
-                user &&
-                user.name &&
-                user.name.toLowerCase().includes(value)
-              );
-            });
-            setResults(results);
-          });
+            if(value.length > 2)
+            {
+              //get coordinates
+                const requestOptions = {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json; charset=utf-8' },
+                    body: JSON.stringify({
+                        "Text": value,
+                        "Long": location.longitude,
+                        "Lat": location.latitude
+                    })
+                };
+
+                fetch('https://localhost:7133/geolocation/facility/near', requestOptions)
+                .then(response => response.json())
+                .then((json) => setResults(json.hits));     
+            }
+            else{
+              setResults([]);
+            }
+      };
+
+      const getGeolocation = () => {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              setLocation({
+                latitude: position.coords.latitude,
+                longitude: position.coords.longitude,
+              });
+              console.log(position.coords.latitude, position.coords.longitude);
+            },
+            (error) => {
+              console.log(error);
+            }
+          );
+        }
       };
     
       const handleChange = (value) => {
         setInput(value);
+        getGeolocation();
         fetchData(value);
       };
     return (
