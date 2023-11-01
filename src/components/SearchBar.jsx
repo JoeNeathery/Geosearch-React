@@ -11,6 +11,7 @@ export const SearchBar = ({ setResults }) => {
             if(value.length > 2)
             {
               //get coordinates
+                getGeolocation();
                 const requestOptions = {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json; charset=utf-8' },
@@ -49,7 +50,6 @@ export const SearchBar = ({ setResults }) => {
     
       const handleChange = (value) => {
         setInput(value);
-        getGeolocation();
         fetchData(value);
       };
     return (
