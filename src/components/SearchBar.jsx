@@ -3,7 +3,7 @@ import { FaSearch } from "react-icons/fa";
 
 import "./SearchBar.css";
 
-export const SearchBar = ({ setResults }) => {
+export const SearchBar = ({ setFacilities, setLocations }) => {
     const [input, setInput] = useState("");
     const [location, setLocation] = useState({longitude: -81.3792, latitude: 28.5383});
 
@@ -18,16 +18,40 @@ export const SearchBar = ({ setResults }) => {
                     body: JSON.stringify({
                         "Text": value,
                         "Long": location.longitude,
-                        "Lat": location.latitude
+                        "Lat": location.latitude,
                     })
                 };
 
-                fetch('https://localhost:7133/geolocation/facility/near', requestOptions)
+                const limit = 5;
+
+                fetch('https://localhost:7133/geolocation/facility/near?limit=' + limit, requestOptions)
                 .then(response => response.json())
-                .then((json) => setResults(json.hits));     
+                .then((json) => {
+                  if(json.hits != null && json.hits.length > 0){
+                    var facilities = [];
+                    var locations = [];
+                    json.hits.forEach(hit => {
+                      if(hit.type != null){
+                        if(hit.type.toLowerCase() === "facility"){
+                          facilities.push(hit);
+                        }
+                        else if(hit.type.toLowerCase() === "location"){
+                          locations.push(hit);
+                        }
+                      }
+                    });
+                    setFacilities(facilities);
+                    setLocations(locations);
+                  }
+                  else{
+                    setFacilities([]);
+                    setLocations([]);
+                  }
+                });     
             }
             else{
-              setResults([]);
+              setFacilities([]);
+              setLocations([]);
             }
       };
 
@@ -39,7 +63,6 @@ export const SearchBar = ({ setResults }) => {
                 latitude: position.coords.latitude,
                 longitude: position.coords.longitude,
               });
-              console.log(position.coords.latitude, position.coords.longitude);
             },
             (error) => {
               console.log(error);

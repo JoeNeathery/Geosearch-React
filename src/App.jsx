@@ -5,13 +5,15 @@ import { SearchBar } from "./components/SearchBar";
 import { SearchResultsList } from "./components/SearchResultsList";
 
 function App() {
-  const [results, setResults] = useState([]);
+  const [facilities, setFacilities] = useState([]);
+  const [locations, setLocations] = useState([]);
+
 
   return (
     <div className="App">
       <div className="search-bar-container">
-        <SearchBar setResults={setResults} />
-        {results && results.length > 0 && <SearchResultsList results={results} />}
+        <SearchBar setFacilities={setFacilities} setLocations={setLocations} />
+        {((facilities && facilities.length > 0) || (locations && locations.length > 0)) && <SearchResultsList facilities={facilities} locations={locations} />}
       </div>
     </div>
   );
