@@ -24,7 +24,7 @@ export const SearchBar = ({ setFacilities, setLocations }) => {
 
                 const limit = 5;
 
-                fetch('https://localhost:7133/geolocation/facility/near?limit=' + limit, requestOptions)
+                fetch('https://localhost:7133/geolocation/facility/nearV2?limit=' + limit, requestOptions)
                 .then(response => response.json())
                 .then((json) => {
                   if(json.hits != null && json.hits.length > 0){
@@ -79,6 +79,7 @@ export const SearchBar = ({ setFacilities, setLocations }) => {
       <div className="input-wrapper">
         <FaSearch id="search-icon" />
         <input
+          className="search-input"
           placeholder="Type to search..."
           value={input}
           onChange={(e) => handleChange(e.target.value)}
