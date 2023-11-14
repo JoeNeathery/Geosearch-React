@@ -24,7 +24,7 @@ export const SearchBar = ({ setFacilities, setLocations }) => {
 
                 const limit = 5;
 
-                fetch('https://localhost:7133/geolocation/facility/nearV2?limit=' + limit, requestOptions)
+                fetch('https://localhost:7133/facility/nearV2?limit=' + limit, requestOptions)
                 .then(response => response.json())
                 .then((json) => {
                   if(json.hits != null && json.hits.length > 0){

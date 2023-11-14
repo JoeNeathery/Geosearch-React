@@ -1,0 +1,61 @@
+
+.edit-label {
+    padding-right: .5em;
+  }
+
+  .form-group {
+    margin-bottom: 1em;
+  }
+
+  .edit-input{
+    margin-right: 1em;
+  }
+
+  #facilityId, #courseInfoId, #crmId{
+    width: 20%;
+  }
+
+  #displayName {
+    width: 70%;
+  }
+
+  #name {
+    width: 83%;
+  }
+
+  #shortName {
+    width: 75%;
+  }
+  
+  .address-text-box{
+    padding-bottom: 0.25em;
+  }
+
+  #countrySelectBox{
+    width: 30%;
+    margin-right: 0.5em;
+  }
+
+  #stateSelectBox{
+    width: 10%;
+  }
+
+  #ianaSelectBox{
+    width: 25%;
+  }
+
+  #lat{
+    width: 25%;
+  }
+
+  #long{
+    width: 25%;
+  }
+
+  #postalCode{
+    width: 20%;
+  }
+
+  .country-iana-boxes{
+    margin-bottom: 0.25em;
+  }
